@@ -22,12 +22,16 @@ body{margin:0;font-family:'Bricolage Grotesque',-apple-system,BlinkMacSystemFont
 .serif{font-family:'Fraunces',Georgia,serif}
 .hand{font-family:'Caveat',cursive}
 #top{position:absolute;top:0}
-header.app{position:sticky;top:0;z-index:20;background:var(--terra);color:#FBF8EF;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-header.app .t{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;margin:0;line-height:1.05}
+header.app{position:sticky;top:0;z-index:20;background:var(--terra);color:#FBF8EF;padding:14px 16px;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:padding .18s ease}
+header.app.scrolled{padding:8px 16px}
+header.app.scrolled .t{font-size:16px}
+header.app.scrolled .tag{max-height:0;opacity:0;margin:0}
+header.app.scrolled #q{padding-top:8px;padding-bottom:8px}
+header.app .t{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;margin:0;line-height:1.05;transition:font-size .18s ease}
 header.app .t .amp{font-family:'Caveat',cursive;font-weight:600}
-header.app .tag{font-family:'Caveat',cursive;font-size:16px;color:#F2C9AE;margin:1px 0 10px}
+header.app .tag{overflow:hidden;max-height:24px;transition:max-height .18s ease,opacity .18s ease,margin .18s ease;font-family:'Caveat',cursive;font-size:16px;color:#F2C9AE;margin:1px 0 10px}
 .searchwrap{position:relative}
-#q{width:100%;border:0;border-radius:12px;padding:12px 40px 12px 14px;font-size:16px;background:#FBF8EF;color:#3A382E;font-family:inherit}
+#q{width:100%;border:0;border-radius:12px;padding:12px 40px 12px 14px;font-size:16px;transition:padding .18s ease;background:#FBF8EF;color:#3A382E;font-family:inherit}
 #clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:#e7ddcb;color:#8a7f6d;border-radius:50%;width:26px;height:26px;font-size:16px;cursor:pointer;display:none}
 .count{color:#F2C9AE;font-size:13px;margin-top:8px;min-height:16px;font-weight:500}
 main{max-width:860px;margin:0 auto;padding:16px}
@@ -132,6 +136,9 @@ ul.add{margin:0;padding-left:20px}.ul.add li,ul.add li{margin:0 0 5px;font-size:
     nores.style.display=matches.length?'none':'block';
     count.textContent=matches.length+' recette'+(matches.length>1?'s':'')+' trouvée'+(matches.length>1?'s':'');
   }
+  var appHeader=document.querySelector('header.app');
+  function onScroll(){ if(window.scrollY>40) appHeader.classList.add('scrolled'); else appHeader.classList.remove('scrolled'); }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
   q.addEventListener('input',run);
   clear.addEventListener('click',function(){q.value='';run();q.focus();});
 })();
